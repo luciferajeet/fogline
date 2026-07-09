@@ -1,0 +1,17 @@
+{
+  "name": "scotland-yard-online",
+  "version": "1.0.0",
+  "description": "Real-time online hidden-movement detective game, inspired by Scotland Yard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "generate-map": "node generate-map.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
