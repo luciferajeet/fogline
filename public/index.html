@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fogline &mdash; A Hidden Movement Detective Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ===================== HOME / LOBBY ENTRY ===================== -->
+  <section id="screen-home" class="screen active">
+    <div class="home-wrap">
+      <header class="brand">
+        <div class="brand-mark">&#9737;</div>
+        <h1>Fogline</h1>
+        <p class="brand-sub">A hidden&#8211;movement detective game for you and your friends</p>
+      </header>
+
+      <div class="dossier">
+        <div class="dossier-tab">CASE FILE</div>
+        <div class="dossier-body">
+          <label class="field">
+            <span>Your name</span>
+            <input id="input-name" type="text" maxlength="18" placeholder="Inspector..." />
+          </label>
+
+          <div class="dossier-actions">
+            <button id="btn-create" class="btn btn-primary">Start a new case</button>
+            <div class="divider"><span>or join one</span></div>
+            <div class="join-row">
+              <input id="input-code" type="text" maxlength="5" placeholder="ROOM CODE" class="code-input" />
+              <button id="btn-join" class="btn btn-secondary">Join</button>
+            </div>
+          </div>
+          <p id="home-error" class="error-text"></p>
+        </div>
+      </div>
+
+      <p class="rules-blurb">One player is secretly on the run. Everyone else is hunting them across the city.
+        The fugitive's location is only revealed a few times per game &mdash; track ticket types, think ahead, and close the net.</p>
+    </div>
+  </section>
+
+  <!-- ===================== WAITING ROOM ===================== -->
+  <section id="screen-lobby" class="screen">
+    <div class="lobby-wrap">
+      <div class="lobby-card">
+        <div class="lobby-header">
+          <div>
+            <h2>Waiting Room</h2>
+            <p class="muted">Share this code with your friends</p>
+          </div>
+          <div class="room-code" id="room-code-display">-----</div>
+        </div>
+
+        <ul id="lobby-players" class="lobby-players"></ul>
+
+        <p class="muted small">3&ndash;6 players needed. One will be secretly chosen as the fugitive when the case begins.</p>
+        <button id="btn-start" class="btn btn-primary" disabled>Begin the case</button>
+        <p id="lobby-error" class="error-text"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== GAME SCREEN ===================== -->
+  <section id="screen-game" class="screen">
+    <div class="game-wrap">
+
+      <div class="topbar">
+        <div class="topbar-left">
+          <span class="topbar-title">Fogline</span>
+          <span class="room-pill" id="game-room-code">-----</span>
+        </div>
+        <div class="round-tracker" id="round-tracker">
+          <span class="round-label">ROUND</span>
+          <span class="round-number" id="round-number">0</span>
+          <span class="round-max">/ 24</span>
+        </div>
+        <div class="topbar-right">
+          <div class="turn-indicator" id="turn-indicator">Waiting...</div>
+        </div>
+      </div>
+
+      <div class="game-body">
+        <div class="board-panel">
+          <div id="board-container"></div>
+          <div class="reveal-strip" id="reveal-strip"></div>
+        </div>
+
+        <aside class="side-panel">
+          <div class="players-block" id="players-block"></div>
+
+          <div class="me-block" id="me-block">
+            <h3>Your move</h3>
+            <div id="ticket-buttons" class="ticket-buttons"></div>
+            <p class="hint" id="move-hint">Select a ticket, then tap a highlighted station.</p>
+            <button id="btn-double" class="btn btn-double" style="display:none">Use Double Move</button>
+          </div>
+
+          <div class="log-block">
+            <div class="log-tabs">
+              <button class="log-tab active" data-tab="events">Events</button>
+              <button class="log-tab" data-tab="chat">Chat</button>
+            </div>
+            <div id="log-events" class="log-panel active"></div>
+            <div id="log-chat" class="log-panel"></div>
+            <div class="chat-input-row" id="chat-input-row" style="display:none">
+              <input id="chat-input" type="text" maxlength="300" placeholder="Message..." />
+              <button id="btn-send-chat" class="btn btn-secondary btn-sm">Send</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== END SCREEN ===================== -->
+  <section id="screen-end" class="screen">
+    <div class="end-wrap">
+      <div class="dossier end-dossier">
+        <div class="dossier-tab" id="end-tab">CASE CLOSED</div>
+        <div class="dossier-body">
+          <h2 id="end-title">-</h2>
+          <p id="end-subtitle" class="muted"></p>
+          <button id="btn-back-home" class="btn btn-primary">Back to home</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="client.js"></script>
+</body>
+</html>
